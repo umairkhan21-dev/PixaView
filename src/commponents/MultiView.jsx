@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Viewport from "./Viewport";
-import StackedView from "./stackedview";
+import StackedView from "./StackedView";
 import useBreakpoint from "../hooks/useBreakpoint";
 
 
