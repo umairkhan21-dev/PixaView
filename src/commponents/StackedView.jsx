@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Viewport from "./ViewPort";
+import Viewport from "./Viewport";
 
 export default function StackedView({ url, orientation, scrollEnabled, variant="mobile"}) {
   const containerRef = useRef(null);
