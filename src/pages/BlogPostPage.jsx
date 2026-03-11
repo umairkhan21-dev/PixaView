@@ -153,7 +153,7 @@ export default function BlogPostPage() {
             <p key={index}>{block.text}</p>
           )
         )}
-      </div>
+       </div>
     </article>
   );
 }
