@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./publicBlog.css";
+import { API } from "../../utils/api";
 
 const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -16,7 +17,6 @@ function getExcerpt(content = "", maxLength = 180) {
   if (content.length <= maxLength) return content;
   return `${content.slice(0, maxLength).trim()}...`;
 }
-const API = import.meta.env.VITE_API_URL;
 
 export default function PublicBlogPage() {
   const [blogs, setBlogs] = useState([]);

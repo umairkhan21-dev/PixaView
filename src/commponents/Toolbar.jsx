@@ -12,10 +12,10 @@ import { CgScrollV } from "react-icons/cg";
 import { HiCheck, HiX, HiMenu } from "react-icons/hi";
 import useBreakpoint from "../hooks/useBreakpoint";
 import { getFaviconUrl } from "../utils/favicon"
+import { API } from "../utils/api";
 
 
 
-const API = import.meta.env.VITE_API_URL;
 export default function Toolbar({
   onTest,
   viewMode,

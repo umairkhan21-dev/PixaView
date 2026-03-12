@@ -13,9 +13,9 @@ import BlogPostPage from "./pages/BlogPostPage";
 import AdminLoginPage from "./pages/admin/Login";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import useBreakpoint from "./hooks/useBreakpoint";
+import { API } from "./utils/api";
 
 
-const API = import.meta.env.VITE_API_URL;
 const VALID_VIEW_MODES = new Set(["ALL", ...Object.keys(DEVICE_PRESETS), "CUSTOM"]);
 
 function normalizeUrl(rawUrl) {

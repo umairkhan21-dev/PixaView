@@ -2,14 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/blog/BlogCard";
 import "./blog.css";
+import { API } from "../utils/api";
 
 function getDescription(content = "", maxLength = 120) {
   const normalized = content.replace(/\s+/g, " ").trim();
   if (normalized.length <= maxLength) return normalized;
   return `${normalized.slice(0, maxLength).trim()}...`;
 }
-const API = import.meta.env.VITE_API_URL;
-
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

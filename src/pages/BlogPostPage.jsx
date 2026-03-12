@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./blog.css";
+import { API } from "../utils/api";
 
 const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   year: "numeric",
 });
-
-const API = import.meta.env.VITE_API_URL;
 
 function parseContentBlocks(content = "") {
   const blocks = [];

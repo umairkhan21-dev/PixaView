@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { API } from "../../utils/api";
 
 const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   year: "numeric",
 });
-const API = import.meta.env.VITE_API_URL;
-
 function getWords(text = "") {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }

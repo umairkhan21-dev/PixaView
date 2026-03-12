@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { API } from "../../utils/api";
 
 function slugify(value) {
   return value
@@ -8,9 +9,6 @@ function slugify(value) {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
 }
-
-
-const API = import.meta.env.VITE_API_URL;
 export default function CreateBlog({ onCreated, sectionId = "" }) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");

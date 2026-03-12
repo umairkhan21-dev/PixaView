@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { API } from "../../utils/api";
 
 const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
 });
-const API = import.meta.env.VITE_API_URL;
-
 function getWordsCount(content = "") {
     return content.trim().split(/\s+/).filter(Boolean).length;
 }

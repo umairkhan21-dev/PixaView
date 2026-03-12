@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAdminToken, setAdminToken } from "../../utils/adminAuth";
+import { API } from "../../utils/api";
 import "./login.css";
 
 
-const API = import.meta.env.VITE_API_URL;
 export default function AdminLoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

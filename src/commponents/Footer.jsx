@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
+import { API } from "../utils/api";
 
 const DONATE_URL = "buymeacoffee.com/Umairthedev";
-const API = import.meta.env.VITE_API_URL;
 
 function toExternalHref(value) {
   const raw = String(value || "").trim();
