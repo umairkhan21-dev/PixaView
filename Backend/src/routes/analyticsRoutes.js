@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
 import express from "express";
 import Analytics from "../models/analytics.js";
 
 const router = express.Router();
-const ANALYTICS_DOC_ID = "000000000000000000000001";
+const ANALYTICS_DOC_ID = new mongoose.Types.ObjectId("000000000000000000000001");
 
 async function getOrCreateAnalytics(inc = {}) {
   return Analytics.findOneAndUpdate(
