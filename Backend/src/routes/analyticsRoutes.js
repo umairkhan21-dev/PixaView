@@ -39,6 +39,7 @@ router.post("/visit", async (_req, res) => {
     const analytics = await getOrCreateAnalytics({ totalVisitors: 1 });
     res.json(analytics);
   } catch (err) {
+    console.error("VISIT ERROR:",err);
     res.status(500).json({ error: err.message });
   }
 });
