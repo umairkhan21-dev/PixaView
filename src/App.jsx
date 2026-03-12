@@ -221,13 +221,34 @@ function PageShell({ children }) {
 
 export default function App() {
   useEffect(() => {
-    const sessionKey = "analytics-visit-tracked";
+    const sessionKey = "analytics-visit-tracked-v2";
     if (sessionStorage.getItem(sessionKey) === "1") return;
-    sessionStorage.setItem(sessionKey, "1");
 
-    fetch(`${API}/api/analytics/visit`, {
-      method: "POST",
-    }).catch(() => {});
+    let cancelled = false;
+
+    const trackVisit = async () => {
+      try {
+        const response = await fetch(`${API}/api/analytics/visit`, {
+          method: "POST",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to track visit");
+        }
+
+        if (!cancelled) {
+          sessionStorage.setItem(sessionKey, "1");
+        }
+      } catch {
+        // Leave the session unmarked so a later visit in the same session can retry.
+      }
+    };
+
+    trackVisit();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
