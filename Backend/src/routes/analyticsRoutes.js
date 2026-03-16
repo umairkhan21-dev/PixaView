@@ -12,7 +12,7 @@ async function getOrCreateAnalytics(inc = {}) {
     {
       $setOnInsert: {
         // _id: ANALYTICS_DOC_ID,
-        totalVisitors: 0,
+        // totalVisitors: 0,
         responsiveTests: 0,
         supporters: 0,
       },
