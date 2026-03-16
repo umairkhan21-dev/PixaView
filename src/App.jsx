@@ -77,11 +77,14 @@ function TesterPage() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   const handleTest = (rawUrl) => {
-    if (!rawUrl){
+    if (!rawUrl) {
       setInputUrl("");
       setUrl("");
       return;
     }
+
+    fetch("/api/analytics/test", { method: "POST" }).catch(() => { });
+
     const formatted = normalizeUrl(rawUrl);
     setInputUrl(formatted);
     setUrl(formatted);
@@ -175,14 +178,14 @@ function TesterPage() {
     <div
       className={`app-container tester-app ${isCompactLayout ? "tester-app--compact" : ""}`}
     >
-      <Toolbar onTest={handleTest} viewMode={viewMode} setViewMode={setViewMode} 
-      devicePreset={devicePreset} setDevicePreset={setDevicePreset} DEVICE_PRESET={DEVICE_PRESETS} 
-      orientation={orientation} setOrientation={setOrientation} scrollEnabled={scrollEnabled} setScrollEnabled={setScrollEnabled}
-      inputUrl={inputUrl} setInputUrl={setInputUrl} />
+      <Toolbar onTest={handleTest} viewMode={viewMode} setViewMode={setViewMode}
+        devicePreset={devicePreset} setDevicePreset={setDevicePreset} DEVICE_PRESET={DEVICE_PRESETS}
+        orientation={orientation} setOrientation={setOrientation} scrollEnabled={scrollEnabled} setScrollEnabled={setScrollEnabled}
+        inputUrl={inputUrl} setInputUrl={setInputUrl} />
       <main className="main-content">
         <MultiView url={url} viewMode={viewMode} devicePreset={devicePreset} orientation={orientation} scrollEnabled={scrollEnabled}
-        autoSync={autoSync}
-        compactLayout={isCompactLayout}
+          autoSync={autoSync}
+          compactLayout={isCompactLayout}
         />
       </main>
       <BottomBar autosync={autoSync} setAutoSync={setAutoSync} isAutoSyncAvailable={viewMode === "ALL"} handleShare={handleShare} compactLayout={isCompactLayout} />

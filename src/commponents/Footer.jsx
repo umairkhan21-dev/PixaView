@@ -21,7 +21,6 @@ export default function Footer({ className = "" }) {
                 method: "POST",
             });
         } catch {
-            // Keep redirect behavior even when analytics call fails.
         }
         window.location.assign(donateHref);
     };
