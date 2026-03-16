@@ -3,19 +3,13 @@ import express from "express";
 import Analytics from "../models/analytics.js";
 
 const router = express.Router();
-// const ANALYTICS_DOC_ID = "000000000000000000000001";
+
 
 async function getOrCreateAnalytics(inc = {}) {
   return Analytics.findOneAndUpdate(
-    // { _id: ANALYTICS_DOC_ID },
+    
     {},
     {
-      // $setOnInsert: {
-        // _id: ANALYTICS_DOC_ID,
-        // totalVisitors: 0,
-        // responsiveTests: 0,
-        // supporters: 0,
-      // },
       ...(Object.keys(inc).length ? { $inc: inc } : {}),
     },
     {
