@@ -10,12 +10,12 @@ async function getOrCreateAnalytics(inc = {}) {
     // { _id: ANALYTICS_DOC_ID },
     {},
     {
-      $setOnInsert: {
+      // $setOnInsert: {
         // _id: ANALYTICS_DOC_ID,
         // totalVisitors: 0,
-        responsiveTests: 0,
-        supporters: 0,
-      },
+        // responsiveTests: 0,
+        // supporters: 0,
+      // },
       ...(Object.keys(inc).length ? { $inc: inc } : {}),
     },
     {
