@@ -21,4 +21,4 @@ PixaView is a responsive testing tool that allows developers to preview how thei
 
 ## 👨‍💻 Author
 
-Umair Khan
+Mohd. Umair Khan
