@@ -377,6 +377,7 @@ export default function Toolbar({
         <div className="toolbar-shell__actions">
           <button
             type="submit"
+            className="toolbar-primary-btn"
             style={{
               padding: "10px 16px",
               background: "#fff",
@@ -389,6 +390,13 @@ export default function Toolbar({
           >
             TEST
           </button>
+          <a
+            href="/pixaview-chrome-extension.zip"
+            download
+            className="toolbar-download-btn"
+          >
+            Download Extension
+          </a>
           {isMobile && (
             <button
               type="button"
