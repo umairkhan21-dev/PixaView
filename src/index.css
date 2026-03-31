@@ -132,6 +132,28 @@ button:focus-visible + .device-tooltip {
   overflow-y: visible;
 }
 
+.tester-app--embed {
+  min-height: 100dvh;
+  height: 100dvh;
+  background: #0f172a;
+}
+
+.tester-app--embed .toolbar-shell {
+  padding: 8px 10px 6px;
+}
+
+.tester-app--embed .toolbar-brand {
+  display: none;
+}
+
+.tester-app--embed .main-content {
+  min-height: 0;
+}
+
+.tester-app--embed .toolbar-search__input {
+  font-size: 14px;
+}
+
 .tester-footer {
   position: relative;
   margin: 0;

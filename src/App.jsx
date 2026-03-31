@@ -4,7 +4,7 @@ import MultiView from "./commponents/MultiView";
 import BottomBar from "./commponents/BottomBar";
 import { DEVICE_PRESETS } from "./commponents/device";
 import Footer from "./commponents/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdminLayout from "./commponents/admin/AdminLayout";
 import AdminDashboard from "./commponents/admin/AdminDashboard";
 import AdminBlogPage from "./commponents/admin/AdminBlogPage";
@@ -38,12 +38,20 @@ function getActivePreset(viewMode, devicePreset) {
   return devicePreset[viewMode] ?? null;
 }
 
-function buildTesterSearchParams({ url, viewMode, orientation, scrollEnabled, devicePreset }) {
+function buildTesterSearchParams({
+  url,
+  viewMode,
+  orientation,
+  scrollEnabled,
+  devicePreset,
+  embedMode = false,
+}) {
   const params = new URLSearchParams();
   const hasNonDefaultViewState =
     viewMode !== "ALL" || orientation !== "portrait" || !scrollEnabled;
 
   if (url) params.set("url", url);
+  if (embedMode) params.set("embed", "1");
   if (url || hasNonDefaultViewState) {
     params.set("mode", viewMode);
     params.set("orientation", orientation);
@@ -59,22 +67,66 @@ function buildTesterSearchParams({ url, viewMode, orientation, scrollEnabled, de
   return params;
 }
 
-function TesterPage() {
-  const isCompactLayout = useBreakpoint(1024);
-  const [inputUrl, setInputUrl] = useState("");
-  const [url, setUrl] = useState("");
-  const [viewMode, setViewMode] = useState("ALL");
-  const [autoSync, setAutoSync] = useState(false);
-  const [devicePreset, setDevicePreset] = useState({
+function getInitialTesterState() {
+  const params = new URLSearchParams(window.location.search);
+  const nextMode = params.get("mode");
+  const viewMode = nextMode && VALID_VIEW_MODES.has(nextMode) ? nextMode : "ALL";
+  const nextOrientation = params.get("orientation");
+  const orientation =
+    nextOrientation === "portrait" || nextOrientation === "landscape"
+      ? nextOrientation
+      : "portrait";
+  const nextScroll = params.get("scroll");
+  const scrollEnabled =
+    nextScroll === null ? true : nextScroll === "1" || nextScroll === "true";
+  const urlParam = params.get("url");
+  const normalizedUrl = urlParam ? normalizeUrl(urlParam) : "";
+  const w = Number(params.get("w") ?? params.get("width"));
+  const h = Number(params.get("h") ?? params.get("height"));
+
+  const devicePreset = {
     DESKTOP: null,
     TABLET: null,
     MOBILE: null,
     TELEVISION: null,
     CUSTOM: null,
+  };
+
+  if (viewMode !== "ALL" && Number.isFinite(w) && w > 0 && Number.isFinite(h) && h > 0) {
+    devicePreset[viewMode] = {
+      id: `${viewMode.toLowerCase()}-shared-size`,
+      label: "Shared size",
+      width: w,
+      height: h,
+    };
+  }
+
+  return {
+    inputUrl: normalizedUrl,
+    url: normalizedUrl,
+    viewMode,
+    orientation,
+    scrollEnabled,
+    devicePreset,
+  };
+}
+
+function TesterPage() {
+  const isCompactLayout = useBreakpoint(1024);
+  const [isEmbedMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const embed = params.get("embed");
+    return embed === "1" || embed === "true";
   });
-  const [orientation, setOrientation] = useState("portrait");
-  const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [initialState] = useState(getInitialTesterState);
+  const [inputUrl, setInputUrl] = useState(() => initialState.inputUrl);
+  const [url, setUrl] = useState(() => initialState.url);
+  const [viewMode, setViewMode] = useState(() => initialState.viewMode);
+  const [autoSync, setAutoSync] = useState(false);
+  const [devicePreset, setDevicePreset] = useState(() => initialState.devicePreset);
+  const [orientation, setOrientation] = useState(() => initialState.orientation);
+  const [scrollEnabled, setScrollEnabled] = useState(() => initialState.scrollEnabled);
+  const hasSyncedUrlRef = useRef(false);
 
   const handleTest = (rawUrl) => {
     if (!rawUrl) {
@@ -97,6 +149,7 @@ function TesterPage() {
       orientation,
       scrollEnabled,
       devicePreset,
+      embedMode: isEmbedMode,
     });
     const search = params.toString();
     const shareUrl = `${window.location.origin}${window.location.pathname}${search ? `?${search}` : ""}`;
@@ -111,56 +164,10 @@ function TesterPage() {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const nextMode = params.get("mode");
-    const restoredMode = nextMode && VALID_VIEW_MODES.has(nextMode) ? nextMode : "ALL";
-
-    const urlParam = params.get("url");
-    if (urlParam) {
-      const formattedUrl = normalizeUrl(urlParam);
-      setInputUrl(formattedUrl);
-      setUrl(formattedUrl);
+    if (!hasSyncedUrlRef.current) {
+      hasSyncedUrlRef.current = true;
+      return;
     }
-
-    if (nextMode && VALID_VIEW_MODES.has(nextMode)) {
-      setViewMode(nextMode);
-    }
-
-    const nextOrientation = params.get("orientation");
-    if (nextOrientation === "portrait" || nextOrientation === "landscape") {
-      setOrientation(nextOrientation);
-    }
-
-    const nextScroll = params.get("scroll");
-    if (nextScroll !== null) {
-      setScrollEnabled(nextScroll === "1" || nextScroll === "true");
-    }
-
-    const w = Number(params.get("w") ?? params.get("width"));
-    const h = Number(params.get("h") ?? params.get("height"));
-    if (
-      restoredMode !== "ALL" &&
-      Number.isFinite(w) &&
-      w > 0 &&
-      Number.isFinite(h) &&
-      h > 0
-    ) {
-      setDevicePreset((prev) => ({
-        ...(prev && typeof prev === "object" && !Array.isArray(prev) && !("width" in prev) ? prev : {}),
-        [restoredMode]: {
-          id: `${restoredMode.toLowerCase()}-shared-size`,
-          label: "Shared size",
-          width: w,
-          height: h,
-        },
-      }));
-    }
-
-    setIsHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isHydrated) return;
 
     const params = buildTesterSearchParams({
       url,
@@ -168,15 +175,21 @@ function TesterPage() {
       orientation,
       scrollEnabled,
       devicePreset,
+      embedMode: isEmbedMode,
     });
     const search = params.toString();
     const nextUrl = search ? `${window.location.pathname}?${search}` : window.location.pathname;
     window.history.replaceState(null, "", nextUrl);
-  }, [devicePreset, isHydrated, orientation, scrollEnabled, url, viewMode]);
+  }, [devicePreset, orientation, scrollEnabled, url, viewMode]);
 
   return (
     <div
-      className={`app-container tester-app ${isCompactLayout ? "tester-app--compact" : ""}`}
+      className={[
+        "app-container",
+        "tester-app",
+        isCompactLayout ? "tester-app--compact" : "",
+        isEmbedMode ? "tester-app--embed" : "",
+      ].filter(Boolean).join(" ")}
     >
       <Toolbar onTest={handleTest} viewMode={viewMode} setViewMode={setViewMode}
         devicePreset={devicePreset} setDevicePreset={setDevicePreset} DEVICE_PRESET={DEVICE_PRESETS}
@@ -185,11 +198,13 @@ function TesterPage() {
       <main className="main-content">
         <MultiView url={url} viewMode={viewMode} devicePreset={devicePreset} orientation={orientation} scrollEnabled={scrollEnabled}
           autoSync={autoSync}
-          compactLayout={isCompactLayout}
+          compactLayout={isCompactLayout || isEmbedMode}
         />
       </main>
-      <BottomBar autosync={autoSync} setAutoSync={setAutoSync} isAutoSyncAvailable={viewMode === "ALL"} handleShare={handleShare} compactLayout={isCompactLayout} />
-      <Footer className="tester-footer" />
+      {!isEmbedMode && (
+        <BottomBar autosync={autoSync} setAutoSync={setAutoSync} isAutoSyncAvailable={viewMode === "ALL"} handleShare={handleShare} compactLayout={isCompactLayout} />
+      )}
+      {!isEmbedMode && <Footer className="tester-footer" />}
     </div>
   );
 }

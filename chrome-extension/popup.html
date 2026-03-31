@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixaView Responsive Tester</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="popup-shell">
+      <header class="popup-header">
+        <div class="popup-brand">
+          <img src="icons/icon32.png" alt="" class="popup-logo" />
+          <div>
+            <p class="popup-eyebrow">PixaView</p>
+            <h1 class="popup-title">Responsive Tester</h1>
+          </div>
+        </div>
+        <a id="openFullApp" class="popup-link" href="https://www.pixaview.dev" target="_blank" rel="noreferrer">
+          Open full app
+        </a>
+      </header>
+
+      <section class="popup-meta">
+        <p id="statusText" class="popup-status">Checking the active tab...</p>
+        <p id="hostText" class="popup-host" hidden></p>
+      </section>
+
+      <main class="popup-body">
+        <div id="loadingState" class="popup-panel popup-panel--loading">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading PixaView inside the popup...</p>
+        </div>
+
+        <div id="errorState" class="popup-panel popup-panel--error" hidden>
+          <h2>This page can't be tested from the popup</h2>
+          <p id="errorText">
+            Open a regular website tab, then try again. Chrome internal pages and some protected surfaces cannot be passed through.
+          </p>
+          <a id="fallbackLink" class="popup-button" href="https://www.pixaview.dev" target="_blank" rel="noreferrer">
+            Open PixaView
+          </a>
+        </div>
+
+        <div id="frameState" class="popup-frame-shell" hidden>
+          <iframe
+            id="pixaviewFrame"
+            class="popup-frame"
+            title="PixaView Responsive Tester"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+      </main>
+
+      <footer class="popup-footer">
+        Some websites block iframe embedding. If that happens, open the full app for the same target URL.
+      </footer>
+    </div>
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>
