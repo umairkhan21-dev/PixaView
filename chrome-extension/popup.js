@@ -10,6 +10,7 @@ const fallbackLink = document.getElementById("fallbackLink");
 const loadingState = document.getElementById("loadingState");
 const errorState = document.getElementById("errorState");
 const frameState = document.getElementById("frameState");
+const stateOverlay = document.getElementById("stateOverlay");
 const pixaviewFrame = document.getElementById("pixaviewFrame");
 const errorText = document.getElementById("errorText");
 
@@ -31,9 +32,9 @@ function setAppLinks(targetUrl) {
 
 function showLoading(message) {
   statusText.textContent = message;
+  stateOverlay.hidden = false;
   loadingState.hidden = false;
   errorState.hidden = true;
-  frameState.hidden = true;
 }
 
 function showError(message, details) {
@@ -48,9 +49,9 @@ function showFrame(appUrl, hostname) {
   hostText.hidden = false;
   hostText.textContent = hostname;
   pixaviewFrame.src = appUrl;
+  stateOverlay.hidden = false;
   loadingState.hidden = false;
   errorState.hidden = true;
-  frameState.hidden = false;
 }
 
 function isTestableUrl(candidate) {
@@ -92,6 +93,7 @@ async function initPopup() {
     pixaviewFrame.addEventListener(
       "load",
       () => {
+        stateOverlay.hidden = true;
         loadingState.hidden = true;
       },
       { once: true }

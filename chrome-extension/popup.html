@@ -27,22 +27,7 @@
       </section>
 
       <main class="popup-body">
-        <div id="loadingState" class="popup-panel popup-panel--loading">
-          <div class="spinner" aria-hidden="true"></div>
-          <p>Loading PixaView inside the popup...</p>
-        </div>
-
-        <div id="errorState" class="popup-panel popup-panel--error" hidden>
-          <h2>This page can't be tested from the popup</h2>
-          <p id="errorText">
-            Open a regular website tab, then try again. Chrome internal pages and some protected surfaces cannot be passed through.
-          </p>
-          <a id="fallbackLink" class="popup-button" href="https://www.pixaview.dev" target="_blank" rel="noreferrer">
-            Open PixaView
-          </a>
-        </div>
-
-        <div id="frameState" class="popup-frame-shell" hidden>
+        <div id="frameState" class="popup-frame-shell">
           <iframe
             id="pixaviewFrame"
             class="popup-frame"
@@ -50,6 +35,22 @@
             loading="eager"
             referrerpolicy="strict-origin-when-cross-origin"
           ></iframe>
+          <div id="stateOverlay" class="popup-overlay">
+            <div id="loadingState" class="popup-overlay-card popup-overlay-card--loading">
+              <div class="spinner" aria-hidden="true"></div>
+              <p>Loading PixaView inside the popup...</p>
+            </div>
+
+            <div id="errorState" class="popup-overlay-card popup-overlay-card--error" hidden>
+              <h2>This page can't be tested from the popup</h2>
+              <p id="errorText">
+                Open a regular website tab, then try again. Chrome internal pages and some protected surfaces cannot be passed through.
+              </p>
+              <a id="fallbackLink" class="popup-button" href="https://www.pixaview.dev" target="_blank" rel="noreferrer">
+                Open PixaView
+              </a>
+            </div>
+          </div>
         </div>
       </main>
 

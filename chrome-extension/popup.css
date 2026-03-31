@@ -132,7 +132,6 @@ a {
   position: relative;
 }
 
-.popup-panel,
 .popup-frame-shell {
   height: 100%;
   border-radius: 20px;
@@ -142,29 +141,43 @@ a {
   box-shadow: 0 22px 44px rgba(148, 163, 184, 0.28);
 }
 
-.popup-panel {
+.popup-overlay {
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
-  align-content: center;
-  gap: 14px;
-  padding: 24px;
-  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(3px);
+  z-index: 2;
 }
 
-.popup-panel--error {
-  align-content: start;
+.popup-overlay[hidden] {
+  display: none;
+}
+
+.popup-overlay-card {
+  width: 100%;
+  max-width: 320px;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+  color: #0f172a;
+}
+
+.popup-overlay-card--error {
   justify-items: start;
   text-align: left;
-  padding-top: 32px;
 }
 
-.popup-panel--error h2 {
+.popup-overlay-card--error h2 {
   font-size: 20px;
   line-height: 1.1;
   color: #0f172a;
 }
 
-.popup-panel--error p {
+.popup-overlay-card--error p {
   font-size: 13px;
   color: #475569;
 }
