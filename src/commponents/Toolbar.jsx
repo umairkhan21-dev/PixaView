@@ -188,15 +188,14 @@ export default function Toolbar({
       onSubmit={(e) => {
         e.preventDefault();
         runResponsiveTest();
-      }} style={{
-        padding: "12px",
-        background: "#1e1e1e",
+      }}
+      style={{
         overflow: "visible",
-        // width:"230%"
         position: "relative"
-      }}>
+      }}
+    >
       <div className="toolbar-shell__row">
-        <div className="toolbar-main" style={{ display: "flex", alignItems: "center", gap: "10px", flex: 1 }}>
+        <div className="toolbar-main">
           <div className="toolbar-brand" aria-label="PixaView">
             <img
               src="/PixaView-removebg-preview.png"
@@ -205,7 +204,7 @@ export default function Toolbar({
             />
           </div>
 
-          <div className="toolbar-search" style={{ position: "relative", flex: 1, minWidth: 0 }}>
+          <div className="toolbar-search">
             <input
               className="toolbar-search__input"
               type="text"
@@ -221,15 +220,6 @@ export default function Toolbar({
                 const value = e.target.value;
                 setInputUrl(value);
                 updateSuggestions(value);
-              }}
-              style={{
-                width: "100%",
-                boxSizing: "border-box",
-                padding: "10px 12px",
-                borderRadius: "8px",
-                border: "1px solid #444",
-                background: "#111",
-                color: "#fff"
               }}
             />
             {showSuggestions && (
@@ -378,15 +368,6 @@ export default function Toolbar({
           <button
             type="submit"
             className="toolbar-primary-btn"
-            style={{
-              padding: "10px 16px",
-              background: "#fff",
-              color: "#000",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-              fontWeight: "600"
-            }}
           >
             TEST
           </button>
@@ -408,7 +389,7 @@ export default function Toolbar({
           )}
         </div>
         {!isMobile && (
-          <div ref={deviceControlsRef} style={{ display: "flex", gap: "6px" }}>
+          <div ref={deviceControlsRef} className="toolbar-device-controls">
             {["ALL", "DESKTOP", "TABLET", "MOBILE", "TELEVISION"].map(mode => (
               <div key={mode} className="device-wrapper">
                 <button
