@@ -74,9 +74,10 @@ function renderScaledViewport({
   scrollEnabled,
   variant
 }) {
-  const baseScale = variant === "tablet" ? 0.85 : 0.7;
-  const scale = Math.min(1, containerWidth / width);
-  const scaledHeight = height * scale;
+  const baseScale = variant === "tablet" ? 0.95 : 0.85;
+  const scale = Math.min(1,(containerWidth / width)*baseScale );
+  // const scaledHeight = height * scale;
+  const Scale = baseScale * responsiveScale;
 
   return (
     <div

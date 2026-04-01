@@ -371,20 +371,22 @@ export default function Toolbar({
           >
             TEST
           </button>
-          <a
-            href="/pixaview-chrome-extension.zip"
+          {!isMobile && (
+            <a href="/pixaview-chrome-extension.zip"
             download
-            className="toolbar-download-btn"
-          >
-            Download Extension
-          </a>
+            className="toolbar-download-btn">Download Extension</a>
+          )}
+        
           {isMobile && (
             <button
               type="button"
               className="toolbar-icon-btn toolbar-shell__menu-btn"
               onClick={() => setMenuOpen(v => !v)}
             >
-              <HiMenu size={24} />
+             
+              <span className="toolbar-icon-glyph">
+                <HiMenu />
+              </span>
             </button>
           )}
         </div>
@@ -625,6 +627,19 @@ export default function Toolbar({
 
           <hr style={{ borderColor: "#333" }} />
 
+          <a href="/pixaview-chrome-extension.zip" 
+          download
+          style={{
+            background:"#2a2a2a",
+            color:"#fff",
+            border:"none",
+            padding:"10px",
+            borderRadius:8,
+            textAlign:"right",
+            textDecoration:"none",
+            display:"block",
+          }}
+          onCanPlay={() => setOpenMenu(false)}>Download Extension</a>
           <button type="button" onClick={() => setShowCustomSize(true)}>Custom Size</button>
           <button type="button" onClick={() => setOrientation(o => o === "portrait" ? "landscape" : "portrait")}>
             Rotate {isRotateOn ? "ON" : "OFF"}

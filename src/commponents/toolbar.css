@@ -204,6 +204,7 @@
 .device-wrapper.tooltip-right:hover .device-tooltip {
   transform: translateY(0);
 }
+
 .toolbar-icon {
   width: 36px;
   height: 36px;
@@ -229,6 +230,7 @@
   background: #00b4ff;
   color: black;
 }
+
 .toolbar-icon-btn {
   width: 44px;
   height: 44px;
@@ -240,7 +242,7 @@
   align-items: center;
   justify-content: center;
 
-  color: #fff;        
+  color: #fff;
   cursor: pointer;
 
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -329,7 +331,7 @@
   line-height: 1.1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .toolbar-shell {
     padding: 12px;
   }
@@ -371,9 +373,15 @@
   }
 
   .toolbar-download-btn {
-    display: none;
+    /* display: none; */
+    display: inline-flex;
+    min-height: 42px;
+    padding: 0 12px;
+    font-size: 12px;
   }
+}
 
+@media (max-width: 768px) {
   .device-menu-grid {
     grid-template-columns: 1fr;
     width: 100%;
