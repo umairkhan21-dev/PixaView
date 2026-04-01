@@ -191,10 +191,11 @@ function TesterPage() {
         isEmbedMode ? "tester-app--embed" : "",
       ].filter(Boolean).join(" ")}
     >
+      {!(isEmbedMode && url) && (
       <Toolbar onTest={handleTest} viewMode={viewMode} setViewMode={setViewMode}
         devicePreset={devicePreset} setDevicePreset={setDevicePreset} DEVICE_PRESET={DEVICE_PRESETS}
         orientation={orientation} setOrientation={setOrientation} scrollEnabled={scrollEnabled} setScrollEnabled={setScrollEnabled}
-        inputUrl={inputUrl} setInputUrl={setInputUrl} />
+        inputUrl={inputUrl} setInputUrl={setInputUrl} />)}
       <main className="main-content">
         <MultiView url={url} viewMode={viewMode} devicePreset={devicePreset} orientation={orientation} scrollEnabled={scrollEnabled}
           autoSync={autoSync}
