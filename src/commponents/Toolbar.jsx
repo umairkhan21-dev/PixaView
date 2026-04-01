@@ -443,9 +443,11 @@ export default function Toolbar({
                   setMenuAnchorRect(null);
                   setShowCustomSize((v) => !v);
                 }}
-                style={{ background: "#333", color: "#fff", border: "none" }}
+                style={{ width:"44px", height:"44px", padding:0,background: "#333", color: "#fff", border: "none" }}
               >
-                <RiCustomSize size={ICON_SIZE} />
+                <span className="toolbar-icon-glyph">
+                  <RiCustomSize />
+                </span>
               </button>
               <div className="device-tooltip">CUSTOM WIDTH</div>
             </div>
@@ -457,12 +459,17 @@ export default function Toolbar({
                 onClick={() => setOrientation((o) => (o === "portrait" ? "landscape" : "portrait"))}
                 className={`toolbar-icon-btn ${orientation === "landscape" ? "active" : ""}`}
                 style={{
+                  width:"44px",
+                  height:"44px",
+                  padding:0,
                   background: orientation === "landscape" ? "#00b4ff" : "#333",
                   borderColor: orientation === "landscape" ? "#00b4ff" : "#444",
                   color: orientation === "landscape" ? "#000" : "#fff",
                 }}
               >
-                <MdOutlineScreenRotation size={20} />
+                <span className="toolbar-icon-glyph">
+                  <MdOutlineScreenRotation />
+                </span>
               </button>
               <div className="device-tooltip">ROTATE</div>
             </div>
@@ -472,10 +479,10 @@ export default function Toolbar({
                 type="button"
                 onClick={() => setScrollEnabled(v => !v)}
                 className={`toolbar-icon-btn ${scrollEnabled ? "active" : ""}`}
-                style={{ position: "relative" }}
+                style={{ width:"44px", height:"44px", padding:"0",position: "relative" }}
               >
-                <span className="svg-icon">
-                  <CgScrollV size={20} />
+                <span className="toolbar-icon-glyph">
+                  <CgScrollV />
                 </span>
                 <span style={{
                   position: "absolute",
