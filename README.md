@@ -9,6 +9,15 @@ PixaView is a responsive testing tool that allows developers to preview how thei
 - 🎯 Simple and clean UI
 - 🌐 Works with any website URL
 
+🧩 Chrome Extension
+
+PixaView is also available as a Chrome Extension for instant responsive testing directly from your browser.
+
+🚀 Features
+- One-click access from browser toolbar
+- Automatically detects current website
+- Instant responsive preview without switching tabs
+
 ## 🌍 Live Demo
 
 👉 https://pixaview.dev
