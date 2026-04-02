@@ -46,13 +46,13 @@ function buildPixaviewUrl(targetUrl, embed = false) {
 
 function setAppLinks(targetUrl) {
   const popupUrl = buildPixaviewUrl(targetUrl, true)
-  const appUrl = buildPixaviewUrl(targetUrl, false);
+  const fullAppUrl = buildPixaviewUrl(targetUrl, false);
 
   pixaviewFrame.src = popupUrl;
   openFullApp.href = fullAppUrl;
   fallbackLink.href = fullAppUrl;
 
-  return appUrl;
+  return popupUrl;
 }
 
 function showLoading(message) {
