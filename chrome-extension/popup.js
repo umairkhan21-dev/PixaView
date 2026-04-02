@@ -26,7 +26,7 @@ function getTargeturl (candidate) {
     }
     return candidate;
   } catch {
-    return "";
+    return null;
   }
 }
 
@@ -99,10 +99,17 @@ async function getActiveTab() {
 async function initPopup() {
   try {
     const activeTab = await getActiveTab();
+    const rawTabUrl = activeTab?.url || "";
+    const targetUrl = getTargeturl(rawTabUrl);
+    const parsedActiveUrl = parsedActiveUrl && /(^|\.)pixaview\.dev$/i.test(parsedActiveUrl.hostname);
+
     // const tabUrl = activeTab?.url || "";
     const tabUrl = getTargeturl(activeTab?.url || "");
 
-    if (!isTestableUrl(tabUrl)) {
+    if 
+    // (!isTestableUrl(tabUrl)) 
+    (!targetUrl && !isPixaViewHost)
+    {
       setAppLinks("");
       hostText.hidden = true;
       showError(
@@ -111,10 +118,12 @@ async function initPopup() {
       );
       return;
     }
-
+    
     const parsedUrl = new URL(tabUrl);
-    const appUrl = setAppLinks(tabUrl);
-    showFrame(appUrl, parsedUrl.hostname);
+    // const appUrl = setAppLinks(tabUrl);
+    const appUrl = setAppLinks(targetUrl);
+    // showFrame(appUrl, parsedUrl.hostname);
+    showFrame(appUrl, targetUrl ? new URL(targetUrl).hostname : "www.pixaview.dev");
 
     pixaviewFrame.addEventListener(
       "load",
@@ -133,6 +142,7 @@ async function initPopup() {
     );
     console.error(error);
   }
+
 }
 
 initPopup();
