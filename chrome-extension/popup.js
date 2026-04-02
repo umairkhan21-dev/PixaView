@@ -15,9 +15,9 @@ const pixaviewFrame = document.getElementById("pixaviewFrame");
 const errorText = document.getElementById("errorText");
 
 
-function getTargeturl (candidate) {
-  try{
-    const parsed = new URL (candidate);
+function getTargeturl(candidate) {
+  try {
+    const parsed = new URL(candidate);
     const isPixaViewHost = /(^|\.)pixaview\.dev$/i.test(parsed.hostname);
 
     if (isPixaViewHost) {
@@ -101,15 +101,14 @@ async function initPopup() {
     const activeTab = await getActiveTab();
     const rawTabUrl = activeTab?.url || "";
     const targetUrl = getTargeturl(rawTabUrl);
-    const parsedActiveUrl = parsedActiveUrl && /(^|\.)pixaview\.dev$/i.test(parsedActiveUrl.hostname);
+    const parsedActiveUrl = rawTabUrl ? new URL(rawTabUrl) : null;
+    const isPixaViewHost = parsedActiveUrl && /(^|\.)pixaview\.dev$/i.test(parsedActiveUrl.hostname);
 
-    // const tabUrl = activeTab?.url || "";
-    const tabUrl = getTargeturl(activeTab?.url || "");
 
-    if 
-    // (!isTestableUrl(tabUrl)) 
-    (!targetUrl && !isPixaViewHost)
-    {
+
+    if
+      // (!isTestableUrl(tabUrl)) 
+      (!targetUrl && !isPixaViewHost) {
       setAppLinks("");
       hostText.hidden = true;
       showError(
@@ -118,8 +117,7 @@ async function initPopup() {
       );
       return;
     }
-    
-    const parsedUrl = new URL(tabUrl);
+
     // const appUrl = setAppLinks(tabUrl);
     const appUrl = setAppLinks(targetUrl);
     // showFrame(appUrl, parsedUrl.hostname);
