@@ -14,19 +14,44 @@ const stateOverlay = document.getElementById("stateOverlay");
 const pixaviewFrame = document.getElementById("pixaviewFrame");
 const errorText = document.getElementById("errorText");
 
-function buildPixaviewUrl(targetUrl) {
+
+function getTargeturl (candidate) {
+  try{
+    const parsed = new URL (candidate);
+    const isPixaViewHost = /(^|\.)pixaview\.dev$/i.test(parsed.hostname);
+
+    if (isPixaViewHost) {
+      const nestedUrl = parsed.searchParams.get("url");
+      return nestedUrl || "";
+    }
+    return candidate;
+  } catch {
+    return "";
+  }
+}
+
+
+function buildPixaviewUrl(targetUrl, embed = false) {
   const url = new URL(PIXAVIEW_BASE_URL);
+  // url.searchParams
   if (targetUrl) {
     url.searchParams.set("url", targetUrl);
-    url.searchParams.set("embed", "1");
+    // url.searchParams.set("embed", "1");
+    if (embed) {
+      url.searchParams.set("embed", "1");
+    }
   }
   return url.toString();
 }
 
 function setAppLinks(targetUrl) {
-  const appUrl = buildPixaviewUrl(targetUrl);
-  openFullApp.href = appUrl;
-  fallbackLink.href = appUrl;
+  const popupUrl = buildPixaviewUrl(targetUrl, true)
+  const appUrl = buildPixaviewUrl(targetUrl, false);
+
+  pixaviewFrame.src = popupUrl;
+  openFullApp.href = fullAppUrl;
+  fallbackLink.href = fullAppUrl;
+
   return appUrl;
 }
 
@@ -74,7 +99,8 @@ async function getActiveTab() {
 async function initPopup() {
   try {
     const activeTab = await getActiveTab();
-    const tabUrl = activeTab?.url || "";
+    // const tabUrl = activeTab?.url || "";
+    const tabUrl = getTargeturl(activeTab?.url || "");
 
     if (!isTestableUrl(tabUrl)) {
       setAppLinks("");
