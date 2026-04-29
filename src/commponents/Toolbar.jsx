@@ -640,7 +640,9 @@ export default function Toolbar({
             textDecoration:"none",
             display:"block",
           }}
-          onCanPlay={() => setOpenMenu(false)}>Add To Chrome</a>
+          // onCanPlay={() => setOpenMenu(false)}
+          >
+            Add To Chrome</a>
           <button type="button" onClick={() => setShowCustomSize(true)}>Custom Size</button>
           <button type="button" onClick={() => setOrientation(o => o === "portrait" ? "landscape" : "portrait")}>
             Rotate {isRotateOn ? "ON" : "OFF"}
