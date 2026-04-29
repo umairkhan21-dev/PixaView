@@ -374,7 +374,7 @@ export default function Toolbar({
           {!isMobile && (
             <a href="/pixaview-chrome-extension.zip"
             download
-            className="toolbar-download-btn">Download Extension</a>
+            className="toolbar-download-btn">Add To Chrome</a>
           )}
         
           {isMobile && (
@@ -627,8 +627,9 @@ export default function Toolbar({
 
           <hr style={{ borderColor: "#333" }} />
 
-          <a href="/pixaview-chrome-extension.zip" 
-          download
+          <a href="https://chrome.google.com/webstore/detail/pixaview-responsive-tester/fpkmcgklfdcfcbppkahiaipolnnbaldg"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             background:"#2a2a2a",
             color:"#fff",
@@ -639,7 +640,7 @@ export default function Toolbar({
             textDecoration:"none",
             display:"block",
           }}
-          onCanPlay={() => setOpenMenu(false)}>Download Extension</a>
+          onCanPlay={() => setOpenMenu(false)}>Add To Chrome</a>
           <button type="button" onClick={() => setShowCustomSize(true)}>Custom Size</button>
           <button type="button" onClick={() => setOrientation(o => o === "portrait" ? "landscape" : "portrait")}>
             Rotate {isRotateOn ? "ON" : "OFF"}
