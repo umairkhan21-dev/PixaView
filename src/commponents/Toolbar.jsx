@@ -372,8 +372,7 @@ export default function Toolbar({
             TEST
           </button>
           {!isMobile && (
-            <a href="/pixaview-chrome-extension.zip"
-            download
+            <a href="https://chrome.google.com/webstore/detail/pixaview-responsive-tester/fpkmcgklfdcfcbppkahiaipolnnbaldg"
             className="toolbar-download-btn">Add To Chrome</a>
           )}
         
